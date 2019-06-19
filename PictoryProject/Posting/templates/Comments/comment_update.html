@@ -1,0 +1,15 @@
+﻿{% extends 'base.html' %}
+{% block fixed_nav%}
+    <h3>댓글수정</h3>
+        <div>
+             <form action="{% url 'comment_update' comment.id%}?next={{nextpage}}" method="post" enctype="multipart/form-data">  {% csrf_token %}
+                     <div class="comment_form">
+                        <label for="body"></label>
+                        <input type="text" name="body" id ="body" class="form-control" value="{{comment.body}}">
+                        <button type="submit" class="btn btn-warning">작성</button><br>
+                           
+                      </div>
+              </form>
+         </div>
+   
+{% endblock %}

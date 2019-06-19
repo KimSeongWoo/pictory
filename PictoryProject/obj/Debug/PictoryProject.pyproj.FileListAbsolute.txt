@@ -1,0 +1,8 @@
+D:\temp\Software-Engineering-TeamP\PictoryProject\bin\Microsoft.PythonTools.WebRole.dll
+D:\temp\Software-Engineering-TeamP\PictoryProject\obj\Debug\attach_server.py
+D:\temp\Software-Engineering-TeamP\PictoryProject\obj\Debug\visualstudio_py_debugger.py
+D:\temp\Software-Engineering-TeamP\PictoryProject\obj\Debug\visualstudio_py_repl.py
+D:\temp\Software-Engineering-TeamP\PictoryProject\obj\Debug\visualstudio_py_util.py
+D:\temp\Software-Engineering-TeamP\PictoryProject\obj\Debug\__init__.py
+D:\temp\Software-Engineering-TeamP\PictoryProject\obj\Debug\__main__.py
+C:\Users\junha\source\repos\Software-Engineering-TeamP\PictoryProject\obj\Debug\PictoryProject.pyproj.CoreCompileInputs.cache

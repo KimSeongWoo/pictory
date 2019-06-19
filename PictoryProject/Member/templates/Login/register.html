@@ -1,0 +1,13 @@
+﻿{% extends 'base.html' %}
+{% block fixed_nav%}
+<body>
+    <h2>Sign up Here!</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{form.as_p}}
+        </table>
+        <input type="submit" value="회원가입">
+    </form>
+</body>
+{% endblock%}

@@ -1,0 +1,26 @@
+﻿{% extends 'base.html' %}
+{% block fixed_nav %}
+<body>
+    <h2>프로필 수정</h2>
+   <form action="{% url 'profile_edit' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+
+	<table>
+		{#{ form.as_table }#}
+        <label for="photo">프로필 사진</label><p />
+        <img src="{{old.photo.url}}" alt="Profile Image" width="150" height="150"/><p />
+        <input type="file" name="photo" id="photo"><p>
+        <label for="name">이름</label>
+            <input type="text" name="name" id="name" aria-label="이름" value="{{old.name}}"><p>
+        <label for="email">이메일 주소</label>
+            <input type="text" name="email" id="email" aria-label="Email" value="{{old.email}}"><p>
+        <label for="phone">핸드폰 번호</label>
+            <input type="text" name="phone" id="phone" aria-label="Phone Number" value="{{old.phone}}"><p>
+        <label for="introduction">소개말</label>
+            <input type="text" name="introduction" id="introduction" aria-label="Introduction" value="{{old.introduction}}"><br>
+	</table>
+	<input type="submit" value="프로필 변경">
+   
+   </form>
+</body>
+{%endblock%}

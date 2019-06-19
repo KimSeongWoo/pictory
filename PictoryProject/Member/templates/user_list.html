@@ -1,0 +1,27 @@
+﻿{% extends 'base.html' %}
+{% block fixed_nav%}
+<body>
+    <div class="left"></div>
+        <div class="content">
+            <div class="gray user_list_follow">
+        팔로우할 만한 유저 둘러보기 
+    </div>
+     <h5>프로필로 표시</h5>
+    {% for profile in profiles %}
+        {% if profile.name is not None %}
+        {% if profile.owner_id is not request.user.id %}
+        <div class="user">
+            <div class="profile_id">
+            <img src="{{profile.photo.url}}" alt="" style="border-radius:50%;height:30px; width:30px;">
+            <a style="color:darkorange;" class="gray" href="{% url 'user_detail' profile.id %}">{{ profile.name }}</a>
+            </div>
+        </div>
+        {%endif %}
+        {%endif %}
+    {% endfor %}
+
+            <button onclick="window.location.href='{% url 'myprofile' %}'">돌아가기</button>
+
+</div>
+</body>
+{% endblock %}

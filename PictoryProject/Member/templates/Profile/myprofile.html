@@ -1,0 +1,25 @@
+﻿{% extends 'base.html'%}
+{% block fixed_nav %}
+<body>
+    <h2>프로필 정보 : {{request.user.username}}</h2>
+    <ul>
+        {% for key,value in data.items %}
+        {%if key == '사진'%}
+        <div class="photo" style="width: 18rem;">
+        <img src="{{ value.url }}" class="profile-img" alt="..." width="200" height="150">
+        </div>
+        {% else %}
+        <li id="profile_info">{{key}} : {{value}}</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    
+
+    <a style="color: darkorange" href='{% url 'profile_edit' %}'>프로필 편집</a>
+    <a style="color: darkorange" href='{% url 'password_edit' %}'>비밀번호 편집</a>
+    <a style="color: darkorange" href='{% url 'myfollow_list' %}'>내 팔로우리스트</a>
+    <a style="color: darkorange" href='{% url 'user_list' %}'>다른 계정보기</a><br />
+    <a style="color: darkorange" href='{% url 'signout' %}'>탈퇴</a>
+
+</body>
+{% endblock %}

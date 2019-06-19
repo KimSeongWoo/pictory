@@ -1,0 +1,92 @@
+﻿{% extends 'base.html' %}
+{% block main%}
+
+
+
+<div class="main_left">
+     <h2>나와 친구들의 픽토리를 살펴보세요~</h2><br /><br />         
+    <section class="card_section">
+                    {% for post in timeline.all %}
+                    <div class="card">
+                        {% for profile in allprofile %}
+                        {%if profile.id == post.user_id %}
+                        <header>
+                            <img src="{{profile.photo.url}}" alt=""> 
+                            <div class="user_name">{{profile.name}}</div>
+                            <div class="report_page"> 
+                            <a href="{% url 'report_post' post_pk=post.id%}?next={{request.path}}">신고하기</a>
+                            </div>
+                        </header>
+                        {% endif %}
+                        {% endfor %}
+                        <div>
+                            <h4>{{post.title}}</h4>
+                        </div>
+                        <div class="card_image">
+                            <img src="{{post.image.url}}" alt="">
+                        </div>
+                        <div class="description">
+                            <span>{{post.description}}</span>
+                        </div>
+                        <div class="info">
+                            <div class="info_left">
+                                <i class="far fa-comment"></i>
+                                <a href="{% url 'like_plus' post.id %}"><i class="far fa-heart">{{post.like}}</i></a>
+                                <a href="{% url 'TMP_plus' post.id %}"><i class="fas fa-magic">{{post.TMP}}</i></a>
+                            </div>
+                            <div class="info_right">
+                                {%if post.user_id == user.id%}
+                                <a href="{% url 'edit_post' post.id %}?next={{request.path}}"><i class="far fa-edit"></i></a>
+                                <a href="{% url 'delete_post' post.id %}"><i class="fas fa-trash-alt"></i></a>
+                                {%endif%}
+                            </div>
+                        </div>
+                        <div class="comment">
+                            {%for comment in comments%}
+                                {%if post.id == comment.post_id%}
+                                    {{comment.owner.name}} : {{comment.body}} 
+                                    {%if comment.owner.id == user.id%}
+                                    <a href ="{%url 'comment_update' comment_pk=comment.id  %}?next={{request.path}}">변경</a> <a href ="{%url 'comment_delete' comment.id%}">삭제</a>
+                                    {%endif%}
+                                    <br>
+                                {%endif%}
+                            {%endfor%}
+                        </div>
+                         <form action="{% url 'comment_create' post.id%}" method="post" enctype="multipart/form-data">  {% csrf_token %}
+                              <div class="comment_form">
+                                 <label for="body"></label>
+                                     <input type="text" name="body" id ="body" class="form-control" placeholder="comment"> <button type="submit" class="btn btn-warning">작성</button><br>
+                           
+                               </div>
+                       </form>
+                    </div>
+                    {% endfor %}
+                </section>
+</div>
+<div class="main_right">
+    <div class="right_nav">
+        <div id="fixed_nav">
+        <h3>Pictory</h3>
+        {% if data.is_authenticated %}
+        <div class="photo" style="width: 18rem;">
+            <img src="{{ profile.photo.url }}" class="profile-img" alt="..." width="200" height="150">
+        </div><br />
+        <h2 id="welcome">{{profile.name}} 님 안녕하세요!</h2><br /><br />
+  
+        <a style="color: darkorange" href="/logout">로그아웃</a>
+        <a style="color: darkorange" href='{% url 'myprofile' %}'>내 프로필</a>
+        <a style="color: darkorange" href='{% url 'posting' %}'>내 픽토리</a>
+
+        {% else %}
+        <br /><img src="static/img/logo.png" alt="" height="150" width="90"><br /><br />
+        <h2>Log in to navigate other people's Pictories!</h2><br /><br />
+        <a style="color: darkorange" href='{% url 'login' %}'>로그인</a><br />
+	    <a style="color: darkorange" href='{% url 'register' %}'>회원가입</a>
+    
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+    
+{% endblock %}

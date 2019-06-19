@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Pictory Home Page</title>
+        <link href="Posting/templates/Posting/css/My_posting_list.css" type="text/css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Fjalla+One" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <style>
+            .nav_container {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    background-color: aliceblue;
+    align-items: flex-end;
+    height: 4rem;
+}
+
+.search {
+    margin-bottom: 1rem;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info i {
+    font-size: 1.5rem;
+}
+
+.main_left {
+    margin: 1rem;
+}
+
+.main {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-top: 1px solid #5a5a5a;
+    padding-top: 50px;
+    height: 100vh;
+    width: 100vw;
+}
+
+.card {
+    border: 1px solid #5a5a5a;
+    background-color: white;
+    width: 600px;
+    height: 600px;
+}
+
+.comment {
+    margin: 0rem 1rem 1rem 1rem;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 1rem;
+}
+
+.comment_form form {
+    padding-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+.comment_form form input {
+    width: 550px;
+    height: 30px;
+    border: none;
+    padding-left: 10px;
+}
+
+.comment_form form #submit {
+    border: none;
+    background-color: white;
+}
+
+.card header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+i {
+    font-size: 1.5rem;
+    margin: 1rem;
+    color:darkorange;
+}
+
+a {
+    color:darkorange;        
+}
+
+h2 {
+    display: inline;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+body {
+    margin: 0;
+}
+
+header img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #efefef;
+}
+
+.card_image img {
+    height:60vh;
+    width: 80vh;
+}
+
+#pictory_icon {
+    padding-right: 1rem;
+    border-right: 1px solid black;
+}
+
+.user_name {
+    font-family: 'Fjalla One', sans-serif;
+}
+
+#search_input {
+    border: solid 1px #dbdbdb;
+    border-radius: 3px;
+}
+
+.main_right {
+    margin: 1rem;
+    overflow: auto;
+}
+
+.main_right #fixed_nav {
+    position: fixed;
+    z-index: 1;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+        </style>
+    </head>
+
+    <body>
+        <div class="nav_container">
+            <div class="left">
+                <a href="{% url 'home' %}"><i id="pictory_icon" class="far fa-images"></i></a>
+                <h2>Pictory</h2>
+            </div>
+            <div class="right">
+                <i class="far fa-heart"></i>
+                <a href="{% url 'myprofile' %}"><i class="far fa-user"></i></a>
+                <i class="fas fa-bookmark"></i>
+            </div>
+        </div>
+        <div class="main">
+            <div class="main_left">
+                <section class="card_section">
+                    <form action="{% url 'edit_post' old.id %}?next={{nextpage}}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="Input_title">제목</label><br />
+                            <input type="text" name="title" class="form-control" id="Input_title" value="{{old.title}}"><br />
+                        </div>
+                        <div class="form-group">
+                            <div class="card_image">
+                                <img src="{{old.image.url}}" alt="">
+                            </div><br />
+                            <label for="Input_image">사진</label><br />
+                            <input type="file" name="image" class="form-control" id="Input_image"><br />
+                        </div>
+                        <div class="form-group">
+                            <label for="Input_des">이야기</label><br />
+                            <textarea class="form-control" name="des" id="Input_des" rows="20" cols="70">{{old.description}}</textarea><br />
+                        </div>
+                        <input type="hidden" name="user_id" value="{{user.id}}"> 
+                        <button type="submit" class="btn btn-warning">작성</button>
+                    </form>
+                </section>
+            </div>
+            <div class="main_right">
+                <div class="right_nav">
+                    <div id="fixed_nav">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

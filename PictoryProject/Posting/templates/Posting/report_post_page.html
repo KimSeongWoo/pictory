@@ -1,0 +1,28 @@
+﻿{% extends 'base.html' %}
+{% block main%}
+    <div class="reportpage">
+           <section class="card_section">
+                    <form action="{% url 'report_post' post.id%}?next={{nextpage}}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="Input_title">제목</label><br />
+                            <input type="text" name="title" class="form-control" id="Input_title" placeholder="Enter title"><br />
+                        </div>
+                        <div class="form-group">
+                            <label for="Input_des">사유</label><br />
+                            <textarea class="form-control" name="content" id="Input_des" rows="20" cols="70"></textarea><br />
+                        </div>
+                        <input type="hidden" name="user_id" value="{{user.id}}"> 
+                        <button type="submit" class="btn btn-warning">작성</button>
+                        <button onclick="goBack()">돌아가기</button>
+                        <script>
+                                function goBack() {
+                                window.history.back();
+                                }
+                        </script>
+                    </form>
+            </section>
+    <div/>
+
+    
+{% endblock %}

@@ -1,0 +1,33 @@
+﻿{% extends 'base.html'%}
+{% block fixed_nav %}
+
+<body>
+    <div class="left"></div>
+        <div class="content">
+            <div class="gray user_list_follow">
+    </div>
+    <h5>내가 팔로잉하는 사람들</h5>
+    {% for following in followings %}
+        <div class="followings">
+            <div class="followings_id">
+                
+            <a class="gray" href="{% url 'user_detail' following.following_profile.id %}">{{ following.following_profile.name}}</a>
+            </div>
+
+        </div>
+    {% endfor %}
+            <br />
+ 
+   <h5>나의 팔로워들</h5>
+   {% for follower in followers %}
+        <div class="followers">
+            <div class="followers_id">
+                
+            <a class="gray" href="{% url 'user_detail' follower.follower_profile.id %}">{{ follower.follower_profile.name }}</a>
+            </div>
+
+        </div>
+    {% endfor %}
+</div>
+</body>
+{% endblock %}

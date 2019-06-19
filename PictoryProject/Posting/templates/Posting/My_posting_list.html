@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Pictory Home Page</title>
+        <link href="Posting/templates/Posting/css/My_posting_list.css" type="text/css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Fjalla+One" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <style>
+            .nav_container {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    background-color: aliceblue;
+    align-items: flex-end;
+    height: 4rem;
+}
+
+.search {
+    margin-bottom: 1rem;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info i {
+    font-size: 1.5rem;
+}
+
+.main_left {
+    margin: 1rem;
+}
+
+.main {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-top: 1px solid #5a5a5a;
+    padding-top: 50px;
+    height: 100vh;
+    width: 100vw;
+}
+
+.card {
+    border: 1px solid #5a5a5a;
+    background-color: white;
+    width: 600px;
+}
+
+.profile_left{
+    border: 1px solid #5a5a5a;
+    background-color: white;
+    width:400px;
+    height: 300px;
+}
+
+.profile_left img{
+    border-radius: 30%;
+}
+
+.comment {
+    margin: 0rem 1rem 1rem 1rem;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 1rem;
+}
+
+.comment_form form {
+    padding-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+.comment_form form input {
+    width: 550px;
+    height: 30px;
+    border: none;
+    padding-left: 10px;
+}
+
+.comment_form form #submit {
+    border: none;
+    background-color: white;
+}
+
+.card header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+i {
+    font-size: 1.5rem;
+    margin: 1rem;
+    color:darkorange;
+}
+
+a {
+    color:darkorange;        
+}
+
+h2 {
+    display: inline;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+span {
+    display: block;
+}
+
+body {
+    margin: 0;
+}
+
+header img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: 1px solid #efefef;
+}
+
+.card_image img {
+    height: 60vh;
+    width: 100%;
+}
+
+#pictory_icon {
+    padding-right: 1rem;
+    border-right: 1px solid black;
+}
+
+.user_name {
+    font-family: 'Fjalla One', sans-serif;
+}
+
+#search_input {
+    border: solid 1px #dbdbdb;
+    border-radius: 3px;
+}
+
+.main_right {
+    margin: 1rem;
+    overflow: auto;
+}
+
+.main_right #fixed_nav {
+    position: fixed;
+    z-index: 1;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+#profile_left{
+    font-size:1rem;
+    font-family: 'Fjalla One', sans-serif;
+}
+        </style>
+    </head>
+
+    <body>
+        <div class="nav_container">
+            <div class="left">
+                <a href="{% url 'home' %}"><i id="pictory_icon" class="far fa-images"></i></a>
+                <h2>Pictory</h2>
+            </div>
+            <div class="right">
+                <a href="{% url 'myfollow_list' %}"><i class="fas fa-users"></i></a>
+                <a href="{% url 'myprofile' %}"><i class="far fa-user"></i></a>
+            </div>
+        </div>
+        <div class="main">
+            <div class="main_left">
+                <section class="card_section">
+                    {% for post in postings.all %}
+                    <div class="card">
+                        <header>
+                            <img src="{{profile.photo.url}}" alt="">  <!--현재 유저의 profile가져와서 프로필썸네일-->
+                            <!--img src="img/Satomi1.png" alt=""-->
+                            <div class="user_name">{{profile.name}}</div> <!--현재 유저의 username-->
+                        </header>
+                        <div>
+                            <h4>{{post.title}}</h4>
+                        </div>
+                        <div class="card_image">
+                            <img src="{{post.image.url}}" alt="">
+                        </div>
+                        <div class="description">
+                            <span>{{post.description}}</span>
+                        </div>
+                        <div class="info">
+                            <div class="info_left">
+                                <i class="far fa-comment"></i>
+                                <i class="far fa-heart">{{post.like}}</i>
+                                <i class="fas fa-magic">{{post.TMP}}</i>
+                            </div>
+                            <div class="info_right">
+                                <a href="{% url 'edit_post' post.id %}?next={{request.path}}"><i class="far fa-edit"></i></a>
+                                <a href="{% url 'delete_post' post.id %}"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            {%for comment in all_comment%}
+                                {%if post.id == comment.post_id%}
+                                    {{comment.owner.name}} : {{comment.body}} 
+                                    {%if comment.owner_id == user.id%}
+                                    <a href ="{%url 'comment_update' comment.id%}?next={{request.path}}">변경</a> <a href ="{%url 'comment_delete' comment.id%}">삭제</a>
+                                    {%endif%}
+                                    <br>
+                                {%endif%}
+                            {%endfor%}
+                        </div>
+                         <form action="{% url 'comment_create' post.id%}" method="post" enctype="multipart/form-data">  {% csrf_token %}
+                              <div class="comment_form">
+                                 <label for="body"></label>
+                                     <input type="text" name="body" id ="body" class="form-control" placeholder="comment"> <button type="submit" class="btn btn-warning">작성</button><br>
+                           
+                               </div>
+                       </form>
+                    </div>
+                    {% endfor %}
+                </section>
+            </div>
+            <div class="main_right">
+                <div class="right_nav">
+                    <div id="fixed_nav">
+                        <div class="profile_left">
+                        <div class="photo" style="width: 18rem;">
+        <img src="{{ profile.photo.url }}" class="profile-img" alt="..." width="150" height="100">
+        </div>
+                            <div>
+                                <h3 id="profile_left">{{user.username}}</h3>
+                                <h3 id="profile_left">{{profile.name}}</h3>
+                                <h3 id="profile_left">{{profile.introduction}}</h3>
+                            </div>
+                            </div>
+                        <br />
+                        <a href="{% url 'new'%}" style="text-decoration:none">챕터 추가</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

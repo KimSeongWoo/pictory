@@ -1,0 +1,32 @@
+﻿{% extends 'base.html' %}
+{% block fixed_nav%}
+<body>
+    <h2>Login</h2>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>
+                    <input id="{{form.username.id_for_label}}" maxlength="20" name="{{form.username.html_name}}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password
+                </td>
+                <td>
+                    <input id="{{form.password.id_for_label}}" maxlength="120" name="{{form.password.html_name}}"
+                           type="password">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input style="color: darkorange" type="submit" value="로그인">
+                </td>
+                
+            </tr>
+        </table>
+    </form>
+ </body>
+{% endblock %}
